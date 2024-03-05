@@ -33,8 +33,14 @@ function shallowCopy(obj) {
  *    mergeObjects([{a: 1, b: 2}, {b: 3, c: 5}]) => {a: 1, b: 5, c: 5}
  *    mergeObjects([]) => {}
  */
-function mergeObjects(/* objects */) {
-  throw new Error('Not implemented');
+function mergeObjects(objects) {
+  return objects.reduce((acc, obj) => {
+    Object.entries(obj).forEach(([key, value]) => {
+      const currentValue = acc[key] !== undefined ? acc[key] : 0;
+      acc[key] = currentValue + value;
+    });
+    return acc;
+  }, {});
 }
 
 /**
@@ -118,8 +124,15 @@ function makeImmutable(obj) {
  *    makeWord({ a: [0, 1], b: [2, 3], c: [4, 5] }) => 'aabbcc'
  *    makeWord({ H:[0], e: [1], l: [2, 3, 8], o: [4, 6], W:[5], r:[7], d:[9]}) => 'HelloWorld'
  */
-function makeWord(/* lettersObject */) {
-  throw new Error('Not implemented');
+function makeWord(lettersObject) {
+  return Object.entries(lettersObject)
+    .reduce((acc, [letter, positions]) => {
+      positions.forEach((idx) => {
+        acc[idx] = letter;
+      });
+      return acc;
+    }, [])
+    .join('');
 }
 
 /**
